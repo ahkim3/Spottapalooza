@@ -11,7 +11,7 @@ def get_matching_artists(artists, liked_songs):
             if artist_lower in track_artists:
                 found_artist = track_artists[artist_lower]
                 if found_artist not in matching_artists:
-                    matching_artists[found_artist] = {'songs': [], 'count': 0}
+                    matching_artists[found_artist] = {'songs': [], 'count': 0, 'searched_query': artist}
                 matching_artists[found_artist]['songs'].append(song['track']['name'])
                 matching_artists[found_artist]['count'] += 1
                 break
@@ -93,12 +93,26 @@ def main():
     # Find matching artists
     matching_artists = get_matching_artists(artists, liked_songs)
 
+    print()
+
     if matching_artists:
-        print("Matching artists found in your liked songs:")
-        for artist, data in matching_artists.items():
-            print(f"{artist} ({data['count']} matching songs):")
+        print("Matching artists found in your liked songs:\n")
+
+        # Define order of performance days
+        performance_day_order = {'Thursday': 1, 'Friday': 2, 'Saturday': 3, 'Sunday': 4}
+
+        # Sort matching_artists first by performance day, and then by number of matching songs
+        sorted_artists = sorted(matching_artists.items(), key=lambda x: (performance_day_order[lineup[x[1]['searched_query']]['performance_day']],
+                                                                          -x[1]['count']))
+        for artist, data in sorted_artists:
+            # Print artist, genre, subgenre (if it exists), performance day, and number of matching songs
+            print(f"{artist} ({lineup[data['searched_query']]['genre']}", end="")
+            if lineup[data['searched_query']]['subgenre']:
+                print(f" - {lineup[data['searched_query']]['subgenre']}", end="")
+            print(f", {data['count']} matching songs):   // {lineup[data['searched_query']]['performance_day'].upper()}")
             for song in data['songs']:
                 print(f"- {song}")
+            print()
     else:
         print("No matching artists found in your liked songs.")
 
