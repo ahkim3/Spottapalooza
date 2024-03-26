@@ -119,6 +119,7 @@ def main():
         # Summary of total number of matching artists and songs on each performance day
         print("Summary:")
         performance_days = {lineup[data['searched_query']]['performance_day'] for artist, data in sorted_artists}
+        performance_days = sorted(performance_days, key=lambda day: performance_day_order[day])
         for day in performance_days:
             matching_artists_day = [artist for artist, data in sorted_artists if lineup[data['searched_query']]['performance_day'] == day]
             total_songs_day = sum(data['count'] for artist, data in sorted_artists if lineup[data['searched_query']]['performance_day'] == day)
