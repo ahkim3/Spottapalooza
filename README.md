@@ -41,7 +41,7 @@ python app.py
 
 -   The app will open a browser window to authenticate with Spotify
 -   The app will save the authentication token in a file called `.cache`
--   -   To reset the authentication token, delete the `.cache` file
+    -   To reset the authentication token, delete the `.cache` file
 -   The app will cache liked songs in a file called `liked_songs.txt`
--   -   To update the liked songs, delete the `liked_songs.txt` file, or select 'y' when prompted in the program
+    -   To update the liked songs, delete the `liked_songs.txt` file, or select 'y' when prompted in the program
 -   The lineup data is stored as a CSV file called `lollapalooza_lineup_2024.csv`. This may be modified as needed.
