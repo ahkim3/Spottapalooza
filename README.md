@@ -15,14 +15,17 @@ This Python script uses the Spotify API to compare the Lollapalooza lineup with 
 
 ## Setup
 
-1. Clone the repository
+1. Clone this repository locally, or quickly spin up a GitHub Codespace:
+
+    [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ahkim3/Spottapalooza?quickstart=1)
+
 2. Install the dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Create a Spotify app and get the client ID, client secret, and redirect URI
+3. [Create a Spotify app](https://developer.spotify.com/documentation/web-api/tutorials/getting-started#create-an-app:~:text=account%20set%20up.-,Create%20an%20app,-An%20app%20provides) and get the client ID, client secret, and redirect URI
 4. Set the client ID and client secret as environment variables
 
 ```bash
