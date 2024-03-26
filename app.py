@@ -113,6 +113,17 @@ def main():
             for song in data['songs']:
                 print(f"- {song}")
             print()
+
+        print()
+
+        # Summary of total number of matching artists and songs on each performance day
+        print("Summary:")
+        performance_days = {lineup[data['searched_query']]['performance_day'] for artist, data in sorted_artists}
+        for day in performance_days:
+            matching_artists_day = [artist for artist, data in sorted_artists if lineup[data['searched_query']]['performance_day'] == day]
+            total_songs_day = sum(data['count'] for artist, data in sorted_artists if lineup[data['searched_query']]['performance_day'] == day)
+            print(f"{len(matching_artists_day)} artists and {total_songs_day} songs found for {day.upper()}.")
+
     else:
         print("No matching artists found in your liked songs.")
 
