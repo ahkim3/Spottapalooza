@@ -87,6 +87,10 @@ def main():
     scope = "user-library-read"
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 
+    # User profile
+    user = sp.current_user()
+    print(f"Hello, {user['display_name']}!")
+
     # Get user's liked songs
     liked_songs = get_liked_songs(sp)
 
