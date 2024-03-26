@@ -5,13 +5,15 @@ from spotipy.oauth2 import SpotifyOAuth
 def get_matching_artists(artists, liked_songs):
     matching_artists = {}
     for song in liked_songs['items']:
-        track_artists = [artist['name'].lower() for artist in song['track']['artists']]
+        track_artists = {artist['name'].lower().strip(): artist['name'] for artist in song['track']['artists']}
         for artist in artists:
-            if artist.lower() in track_artists:
-                if artist not in matching_artists:
-                    matching_artists[artist] = {'songs': [], 'count': 0}
-                matching_artists[artist]['songs'].append(song['track']['name'])
-                matching_artists[artist]['count'] += 1
+            artist_lower = artist.lower().strip()
+            if artist_lower in track_artists:
+                found_artist = track_artists[artist_lower]
+                if found_artist not in matching_artists:
+                    matching_artists[found_artist] = {'songs': [], 'count': 0}
+                matching_artists[found_artist]['songs'].append(song['track']['name'])
+                matching_artists[found_artist]['count'] += 1
                 break
     return matching_artists
 
