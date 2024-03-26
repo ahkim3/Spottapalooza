@@ -1,3 +1,4 @@
+import csv
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -45,9 +46,40 @@ def get_liked_songs(sp):
                 f.write(f"{song['track']['name']} by {song['track']['artists'][0]['name']}\n")
     return liked_songs
 
+def get_artist_lineup(filename):
+    lineup = {}
+
+    with open(filename, 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            artist = row['artist']
+            performance_day = row['perfomance_day']
+            genre = row['genre']
+            subgenre = row['subgenre']
+            is_headliner = row['is_headliner']
+            lineup[artist] = {
+                'performance_day': performance_day,
+                'genre': genre,
+                'subgenre': subgenre,
+                'is_headliner': is_headliner
+            }
+    return lineup
+
 def main():
+    lineup_filename = "lollapalooza_lineup_2024.csv"
+
     # User Input: List of artists
-    artists = input("Enter a comma-separated list of artists: ").split(',')
+    # artists = input("Enter a comma-separated list of artists: ").split(',')
+
+    # Read artist lineup from file
+    try:
+        lineup = get_artist_lineup(lineup_filename)
+    except FileNotFoundError:
+        print(f"Error: File '{lineup_filename}' not found.")
+        return
+
+    # Store artist names as a list
+    artists = list(lineup.keys())
 
     # Spotify authentication and authorization
     scope = "user-library-read"
